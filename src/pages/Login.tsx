@@ -28,7 +28,7 @@ const Login = () => {
   };
 
   return (
-    <div className="min-h-screen bg-gray-100 flex items-center justify-center">
+    <div className="min-h-screen bg-gray-100 flex flex-col items-center justify-center">
       <div className="bg-white p-8 rounded-lg shadow-md w-96">
         <h2 className="text-2xl font-bold mb-6 text-center text-gray-800">
           Login
@@ -80,6 +80,18 @@ const Login = () => {
           Password: password123
         </div>
       </div>
+      
+      <footer className="mt-8 text-sm text-gray-600 text-center">
+        Made with <span className="text-red-500">♥</span> by{" "}
+        <a 
+          href="https://www.tejaschhabra.tech" 
+          target="_blank" 
+          rel="noopener noreferrer"
+          className="text-blue-500 hover:text-blue-600 underline"
+        >
+          Tejas Chhabra
+        </a>
+      </footer>
     </div>
   );
 };
