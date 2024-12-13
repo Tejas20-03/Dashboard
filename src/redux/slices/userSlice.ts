@@ -7,6 +7,8 @@ interface UserState {
   totalPages: number;
   total: number;
   selectedUser: User | null;
+  searchTerm: string;
+  deletedUsersCount: number;
 }
 
 const initialState: UserState = {
@@ -15,6 +17,8 @@ const initialState: UserState = {
   totalPages: 1,
   total: 0,
   selectedUser: null,
+  searchTerm: "",
+  deletedUsersCount: 0,
 };
 
 const userSlice = createSlice({
@@ -43,13 +47,23 @@ const userSlice = createSlice({
       state.users = state.users.filter((user) => user.id !== action.payload);
       state.total -= 1;
       state.totalPages = Math.ceil(state.total / 5);
+      state.deletedUsersCount += 1;
       if (state.selectedUser?.id === action.payload) {
         state.selectedUser = null;
       }
     },
+    setSearchTerm: (state, action: PayloadAction<string>) => {
+      state.searchTerm = action.payload;
+      state.currentPage = 1;
+    },
   },
 });
 
-export const { setUsers, setCurrentPage, setSelectedUser, deleteUser } =
-  userSlice.actions;
+export const {
+  setUsers,
+  setCurrentPage,
+  setSelectedUser,
+  deleteUser,
+  setSearchTerm,
+} = userSlice.actions;
 export default userSlice.reducer;
