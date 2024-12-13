@@ -27,9 +27,12 @@ const AnalyticsDashboard = () => {
   const { total, deletedUsersCount } = useSelector(
     (state: RootState) => state.users
   );
-  const { selectedRegion, dateRange, filteredRegistrationTrend, filteredRegionData } = useSelector(
-    (state: RootState) => state.analytics
-  );
+  const {
+    selectedRegion,
+    dateRange,
+    filteredRegistrationTrend,
+    filteredRegionData,
+  } = useSelector((state: RootState) => state.analytics);
   const activeUsers = Math.floor(total * 0.8);
   const { registrationTrend, regionData, userStatusData } = getAnalyticsData();
 
@@ -38,7 +41,9 @@ const AnalyticsDashboard = () => {
     let filteredRegions = [...regionData];
 
     if (selectedRegion) {
-      filteredRegions = regionData.filter((region) => region.region === selectedRegion);
+      filteredRegions = regionData.filter(
+        (region) => region.region === selectedRegion
+      );
     }
 
     if (dateRange.startDate && dateRange.endDate) {
@@ -50,19 +55,21 @@ const AnalyticsDashboard = () => {
       });
     }
 
-    dispatch(setFilteredData({
-      registrationTrend: filteredTrend,
-      regionData: filteredRegions,
-    }));
+    dispatch(
+      setFilteredData({
+        registrationTrend: filteredTrend,
+        regionData: filteredRegions,
+      })
+    );
   }, [selectedRegion, dateRange, dispatch, registrationTrend, regionData]);
 
-  const displayedRegistrationTrend = filteredRegistrationTrend.length > 0 
-    ? filteredRegistrationTrend 
-    : registrationTrend;
-  
-  const displayedRegionData = filteredRegionData.length > 0 
-    ? filteredRegionData 
-    : regionData;
+  const displayedRegistrationTrend =
+    filteredRegistrationTrend.length > 0
+      ? filteredRegistrationTrend
+      : registrationTrend;
+
+  const displayedRegionData =
+    filteredRegionData.length > 0 ? filteredRegionData : regionData;
 
   return (
     <div className="p-4 lg:p-6">
@@ -75,18 +82,30 @@ const AnalyticsDashboard = () => {
 
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 lg:gap-6 mb-6 lg:mb-8">
           <div className="bg-white rounded-xl shadow-lg p-4 lg:p-6">
-            <h2 className="text-base lg:text-lg font-semibold text-gray-600">Total Users</h2>
-            <p className="text-3xl lg:text-4xl font-bold text-blue-600 mt-2">{total}</p>
+            <h2 className="text-base lg:text-lg font-semibold text-gray-600">
+              Total Users
+            </h2>
+            <p className="text-3xl lg:text-4xl font-bold text-blue-600 mt-2">
+              {total}
+            </p>
           </div>
 
           <div className="bg-white rounded-xl shadow-lg p-4 lg:p-6">
-            <h2 className="text-base lg:text-lg font-semibold text-gray-600">Active Users</h2>
-            <p className="text-3xl lg:text-4xl font-bold text-green-600 mt-2">{activeUsers}</p>
+            <h2 className="text-base lg:text-lg font-semibold text-gray-600">
+              Active Users
+            </h2>
+            <p className="text-3xl lg:text-4xl font-bold text-green-600 mt-2">
+              {activeUsers}
+            </p>
           </div>
 
           <div className="bg-white rounded-xl shadow-lg p-4 lg:p-6">
-            <h2 className="text-base lg:text-lg font-semibold text-gray-600">Deleted Users</h2>
-            <p className="text-3xl lg:text-4xl font-bold text-red-600 mt-2">{deletedUsersCount}</p>
+            <h2 className="text-base lg:text-lg font-semibold text-gray-600">
+              Deleted Users
+            </h2>
+            <p className="text-3xl lg:text-4xl font-bold text-red-600 mt-2">
+              {deletedUsersCount}
+            </p>
           </div>
         </div>
 
@@ -103,7 +122,12 @@ const AnalyticsDashboard = () => {
                   <YAxis />
                   <Tooltip />
                   <Legend />
-                  <Line type="monotone" dataKey="users" stroke="#8884d8" strokeWidth={2} />
+                  <Line
+                    type="monotone"
+                    dataKey="users"
+                    stroke="#8884d8"
+                    strokeWidth={2}
+                  />
                 </LineChart>
               </ResponsiveContainer>
             </div>
@@ -126,8 +150,11 @@ const AnalyticsDashboard = () => {
                     paddingAngle={5}
                     dataKey="value"
                   >
-                    {userStatusData.map((entry, index) => (
-                      <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
+                    {userStatusData.map((_, index) => (
+                      <Cell
+                        key={`cell-${index}`}
+                        fill={COLORS[index % COLORS.length]}
+                      />
                     ))}
                   </Pie>
                   <Tooltip />
@@ -150,8 +177,11 @@ const AnalyticsDashboard = () => {
                   <Tooltip />
                   <Legend />
                   <Bar dataKey="users" fill="#8884d8">
-                    {displayedRegionData.map((entry, index) => (
-                      <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
+                    {displayedRegionData.map((_, index) => (
+                      <Cell
+                        key={`cell-${index}`}
+                        fill={COLORS[index % COLORS.length]}
+                      />
                     ))}
                   </Bar>
                 </BarChart>
