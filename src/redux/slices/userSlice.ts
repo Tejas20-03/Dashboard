@@ -39,8 +39,17 @@ const userSlice = createSlice({
     setSelectedUser: (state, action: PayloadAction<User | null>) => {
       state.selectedUser = action.payload;
     },
+    deleteUser: (state, action: PayloadAction<number>) => {
+      state.users = state.users.filter((user) => user.id !== action.payload);
+      state.total -= 1;
+      state.totalPages = Math.ceil(state.total / 5);
+      if (state.selectedUser?.id === action.payload) {
+        state.selectedUser = null;
+      }
+    },
   },
 });
 
-export const { setUsers, setCurrentPage, setSelectedUser } = userSlice.actions;
+export const { setUsers, setCurrentPage, setSelectedUser, deleteUser } =
+  userSlice.actions;
 export default userSlice.reducer;

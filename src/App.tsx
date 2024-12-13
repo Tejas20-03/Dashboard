@@ -2,9 +2,11 @@ import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 import { Provider } from "react-redux";
 import { useSelector } from "react-redux";
 import Dashboard from "./pages/Dashboard";
+import AnalyticsDashboard from "./pages/AnalyticsDashboard";
 import ProtectedRoute from "./components/ProtectedRoute";
 import Login from "./pages/Login";
 import { RootState, store } from "./redux/store";
+import DashboardLayout from "./layout/DashboardLayout";
 
 const AppRoutes = () => {
   const { token } = useSelector((state: RootState) => state.auth);
@@ -17,14 +19,16 @@ const AppRoutes = () => {
         element={isLoggedIn ? <Navigate to="/dashboard" replace /> : <Login />}
       />
       <Route
-        path="/dashboard"
         element={
           <ProtectedRoute>
-            <Dashboard />
+            <DashboardLayout />
           </ProtectedRoute>
         }
-      />
-      <Route path="/" element={<Navigate to="/dashboard" replace />} />
+      >
+        <Route path="/dashboard" element={<Dashboard />} />
+        <Route path="/analytics" element={<AnalyticsDashboard />} />
+        <Route path="/" element={<Navigate to="/dashboard" replace />} />
+      </Route>
     </Routes>
   );
 };
